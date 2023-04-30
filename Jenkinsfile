@@ -7,6 +7,22 @@ pipeline {
         buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
     }
     stages{
+	     stage('Quality Gate Statuc Check'){
+                  steps{
+                      script{
+                      withSonarQubeEnv('sonarserver') { 
+                      sh "mvn sonar:sonar"
+                       }
+                      timeout(time: 1, unit: 'HOURS') {
+                      def qg = waitForQualityGate()
+                      if (qg.status != 'OK') {
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                      }
+                    }
+                  }
+                }  
+              }
+
         stage('Build'){
             steps{
                  sh script: 'mvn clean package'
