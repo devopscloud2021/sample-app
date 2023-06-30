@@ -4,7 +4,7 @@
 	<groupId>in.javahome</groupId>
 	<artifactId>sample-app</artifactId>
 	<packaging>war</packaging>
-	<version>2.0.0</version>
+	<version>1.0.0</version>
 	<name>sample-app</name>
 	<url>http://maven.apache.org</url>
 	
