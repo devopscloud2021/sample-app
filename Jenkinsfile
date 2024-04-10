@@ -51,13 +51,20 @@ pipeline {
                 ],				   
 				credentialsId: 'nexus',
 				groupId: 'in.javahome',
-				nexusUrl: '13.232.27.198:8081',
+				nexusUrl: '3.108.191.6:8081',
 				nexusVersion: 'nexus3',
 				protocol: 'http',
 				repository: 'sample-app',
 				version: '4.0.0'
             }
-        }  	
-		
+        } 
+	stage('Deploy'){
+            steps{
+			    sshagent(['Tomcat-Key']) {
+                     sh "scp -o StrictHostKeyChecking=no target/sample-app-4.0.0.war ec2-user@13.201.43.123:/opt/apache-tomcat-9.0.87/webapps"
+                }
+
+            }
+        }		
 	}
 }
